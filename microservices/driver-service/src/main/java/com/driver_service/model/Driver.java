@@ -19,7 +19,7 @@ public class Driver {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = false) // Ensure proper FK column mapping
     private User user;
 
     private String vehicleType;

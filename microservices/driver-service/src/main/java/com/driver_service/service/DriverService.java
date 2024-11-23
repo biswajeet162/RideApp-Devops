@@ -2,10 +2,13 @@ package com.driver_service.service;
 
 
 import com.driver_service.model.Driver;
+import com.driver_service.model.User;
 import com.driver_service.repository.DriverRepository;
+import com.driver_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,14 +18,33 @@ public class DriverService {
     @Autowired
     private DriverRepository driverRepository;
 
+
+    @Autowired private
+    UserRepository userRepository;
+
     @Autowired
     private MapService mapService;
 
     // Onboard a new driver
-    public Driver onboardDriver(Driver driver) {
+    public Driver onboardDriver(Long userId) {
+
+
+////        fetch User with driverId and set in driver.setUser();
+        Optional<User> user = userRepository.findById(userId);
+
+
+        Driver driver = new Driver();
+        if(user.isEmpty()) {
+            driver.setUser(new User());
+        }
+        else{
+            driver.setUser(user.get());
+        }
+
         driver.setLocation(mapService.getRandomLocation());  // Set mock location for MVP
         driver.setCreatedAt(java.time.LocalDateTime.now());
         driver.setUpdatedAt(java.time.LocalDateTime.now());
+        driver.setRating(0.0);
         return driverRepository.save(driver);
     }
 
@@ -57,4 +79,5 @@ public class DriverService {
         }
         return null;
     }
+
 }
