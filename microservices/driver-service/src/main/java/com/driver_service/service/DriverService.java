@@ -1,18 +1,21 @@
 package com.driver_service.service;
 
 
+import com.driver_service.exceptions.UserAlreadyExist;
 import com.driver_service.model.Driver;
 import com.driver_service.model.User;
 import com.driver_service.repository.DriverRepository;
 import com.driver_service.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Slf4j
 public class DriverService {
 
     @Autowired
@@ -26,25 +29,27 @@ public class DriverService {
     private MapService mapService;
 
     // Onboard a new driver
-    public Driver onboardDriver(Long userId) {
+    @Transactional  // Ensure the method runs in a single transaction
+    public Driver onboardDriver(User registeredDriverUser) throws UserAlreadyExist {
+        // Check if the user already exists
+        Driver existingDriver = driverRepository.findByUserId(registeredDriverUser.getId());
+        if (existingDriver != null) {
+            throw new UserAlreadyExist("This is Existing User..............updated the Coordinates");
+        }
 
+        log.info("This is New User");
+        User savedNewUser = userRepository.save(registeredDriverUser);
 
-////        fetch User with driverId and set in driver.setUser();
-        Optional<User> user = userRepository.findById(userId);
-
-
+        // Create and save the new driver
         Driver driver = new Driver();
-        if(user.isEmpty()) {
-            driver.setUser(new User());
-        }
-        else{
-            driver.setUser(user.get());
-        }
+        driver.setUser(savedNewUser);
 
-        driver.setLocation(mapService.getRandomLocation());  // Set mock location for MVP
-        driver.setCreatedAt(java.time.LocalDateTime.now());
-        driver.setUpdatedAt(java.time.LocalDateTime.now());
+        //driver.setVehicleType();
+        driver.setLocation(mapService.getRandomLocation());
+        driver.setCreatedAt(LocalDateTime.now());
+        driver.setUpdatedAt(LocalDateTime.now());
         driver.setRating(0.0);
+
         return driverRepository.save(driver);
     }
 

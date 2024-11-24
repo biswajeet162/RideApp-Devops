@@ -9,7 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DriverDTO {
     private Long id;
+
     private Long userId;
+    private String name;
+    private String email;
+    private String phoneNumber;
+
     private String vehicleType;
     private String status;
     private String location;

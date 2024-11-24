@@ -54,6 +54,7 @@ public class DriverServiceApplication {
 	public void addSampleUsers() {
 		for (int i = 1; i <= 10; i++) {
 			User user = new User();
+			user.setId(Long.valueOf(i));
 			user.setName("Sample User " + i);
 			user.setEmail("user" + i + "@example.com");
 			user.setPassword("pass" + i);

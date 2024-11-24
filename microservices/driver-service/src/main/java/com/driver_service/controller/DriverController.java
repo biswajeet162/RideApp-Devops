@@ -1,8 +1,9 @@
 package com.driver_service.controller;
 
+import com.driver_service.exceptions.UserAlreadyExist;
 import com.driver_service.model.Driver;
 import com.driver_service.model.DriverDTO;
-import com.driver_service.repository.UserRepository;
+import com.driver_service.model.User;
 import com.driver_service.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,11 @@ public class DriverController {
 
 
     // Existing onboarding driver endpoint
-    @GetMapping("/onboard/{id}")
-    public ResponseEntity<DriverDTO> onboardDriver(@PathVariable ("id") Long userId) {
-        Driver savedDriver = driverService.onboardDriver(userId);
-        DriverDTO driverDTO = new DriverDTO(savedDriver.getId(), savedDriver.getUser().getId(), savedDriver.getVehicleType(), savedDriver.getStatus(), savedDriver.getLocation(), savedDriver.getRating());
-        return ResponseEntity.ok(driverDTO);
+    @PostMapping("/onboard")
+    public DriverDTO onboardDriver(@RequestBody User registeredDriverUser) throws UserAlreadyExist {
+        Driver savedDriver = driverService.onboardDriver(registeredDriverUser);
+        DriverDTO driverDTO = new DriverDTO(savedDriver.getId(), savedDriver.getUser().getId(), savedDriver.getUser().getName(), savedDriver.getUser().getEmail(),savedDriver.getUser().getPhoneNumber(), savedDriver.getVehicleType(), savedDriver.getStatus(), savedDriver.getLocation(), savedDriver.getRating());
+        return driverDTO;
     }
 
     // Existing update driver location endpoint
@@ -31,7 +32,7 @@ public class DriverController {
     public ResponseEntity<DriverDTO> updateDriverLocation(@PathVariable Long driverId) {
         Driver updatedDriver = driverService.updateDriverLocation(driverId);
         if (updatedDriver != null) {
-            DriverDTO driverDTO = new DriverDTO(updatedDriver.getId(), updatedDriver.getUser().getId(), updatedDriver.getVehicleType(), updatedDriver.getStatus(), updatedDriver.getLocation(), updatedDriver.getRating());
+            DriverDTO driverDTO = new DriverDTO(updatedDriver.getId(), updatedDriver.getUser().getId(), updatedDriver.getUser().getName(), updatedDriver.getUser().getEmail(),updatedDriver.getUser().getPhoneNumber(), updatedDriver.getVehicleType(), updatedDriver.getStatus(), updatedDriver.getLocation(), updatedDriver.getRating());
             return ResponseEntity.ok(driverDTO);
         }
         return ResponseEntity.notFound().build();
@@ -42,7 +43,7 @@ public class DriverController {
     public ResponseEntity<List<DriverDTO>> getAvailableDrivers() {
         List<Driver> availableDrivers = driverService.getAvailableDrivers();
         List<DriverDTO> driverDTOs = availableDrivers.stream()
-                .map(driver -> new DriverDTO(driver.getId(), driver.getUser().getId(), driver.getVehicleType(), driver.getStatus(), driver.getLocation(), driver.getRating()))
+                .map(driver -> new DriverDTO(driver.getId(), driver.getUser().getId(), driver.getUser().getName(), driver.getUser().getEmail(),driver.getUser().getPhoneNumber(), driver.getVehicleType(), driver.getStatus(), driver.getLocation(), driver.getRating()))
                 .toList();
         return ResponseEntity.ok(driverDTOs);
     }
@@ -52,7 +53,7 @@ public class DriverController {
     public ResponseEntity<DriverDTO> getDriverDetails(@PathVariable Long driverId) {
         Driver driver = driverService.getDriverById(driverId);
         if (driver != null) {
-            DriverDTO driverDTO = new DriverDTO(driver.getId(), driver.getUser().getId(), driver.getVehicleType(), driver.getStatus(), driver.getLocation(), driver.getRating());
+            DriverDTO driverDTO = new DriverDTO(driver.getId(), driver.getUser().getId(), driver.getUser().getName(), driver.getUser().getEmail(),driver.getUser().getPhoneNumber(), driver.getVehicleType(), driver.getStatus(), driver.getLocation(), driver.getRating());
             return ResponseEntity.ok(driverDTO);
         }
         return ResponseEntity.notFound().build();
@@ -63,7 +64,7 @@ public class DriverController {
     public ResponseEntity<DriverDTO> updateDriverStatus(@PathVariable Long driverId, @RequestParam String status) {
         Driver updatedDriver = driverService.updateDriverStatus(driverId, status);
         if (updatedDriver != null) {
-            DriverDTO driverDTO = new DriverDTO(updatedDriver.getId(), updatedDriver.getUser().getId(), updatedDriver.getVehicleType(), updatedDriver.getStatus(), updatedDriver.getLocation(), updatedDriver.getRating());
+            DriverDTO driverDTO = new DriverDTO(updatedDriver.getId(), updatedDriver.getUser().getId(), updatedDriver.getUser().getName(), updatedDriver.getUser().getEmail(), updatedDriver.getUser().getPhoneNumber(), updatedDriver.getVehicleType(), updatedDriver.getStatus(), updatedDriver.getLocation(), updatedDriver.getRating());
             return ResponseEntity.ok(driverDTO);
         }
         return ResponseEntity.notFound().build();

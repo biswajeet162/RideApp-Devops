@@ -1,5 +1,6 @@
 package com.driver_service.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Nullable
 public class Driver {
 
     @Id
@@ -19,7 +21,7 @@ public class Driver {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Ensure proper FK column mapping
+    @JoinColumn(name = "user_id", nullable = true) // Ensure proper FK column mapping
     private User user;
 
     private String vehicleType;
