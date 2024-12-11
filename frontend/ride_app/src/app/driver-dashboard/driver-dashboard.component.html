@@ -1,0 +1,27 @@
+driver-dashboard.component.html
+<div class="driver-dashboard">
+    <h2>Driver Dashboard</h2>
+  
+    <!-- Display a message if no ride requests are available -->
+    <div *ngIf="userRideRequests.length === 0" class="no-requests">
+      <p>No new ride requests.</p>
+    </div>
+  
+    <!-- List of incoming ride requests -->
+    <div *ngIf="userRideRequests.length > 0">
+      <div *ngFor="let request of userRideRequests" class="ride-request">
+        <div class="ride-details">
+          <p><strong>User Id:</strong> {{ request.userId }}</p>
+          <p><strong>User Location:</strong> {{ request.pickupLocation }}</p>
+          <p><strong>Driver ID:</strong> {{ request.driverIds }}</p>
+        </div>
+  
+        <div class="action-buttons">
+          Accept or Reject Ride Request
+          <button (click)="acceptRide(request)">Accept</button>
+          <button >Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

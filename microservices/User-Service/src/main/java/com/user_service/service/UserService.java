@@ -4,6 +4,7 @@ import com.user_service.dto.UserRequestDto;
 import com.user_service.dto.UserResponseDto;
 import com.user_service.model.User;
 import com.user_service.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -30,6 +32,7 @@ public class UserService {
     }
 
     public UserResponseDto login(String email, String password) {
+        log.info("user details - ---  {} {}", email, password);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

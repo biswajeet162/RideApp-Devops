@@ -13,4 +13,11 @@ public class MapService {
         double longitude = -122.4194 + (random.nextDouble() - 0.5);  // Mock longitude
         return latitude + "," + longitude;  // Return location as a string (lat,long)
     }
+
+    public String getRandomLocationFromSrcDest(String src) {
+        Random random = new Random();
+        double latitude = 37.7749 + (random.nextDouble() - 0.5);  // Mock latitude
+        double longitude = -122.4194 + (random.nextDouble() - 0.5);  // Mock longitude
+        return latitude + "," + longitude;  // Return location as a string (lat,long)
+    }
 }

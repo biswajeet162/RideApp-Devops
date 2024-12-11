@@ -1,0 +1,44 @@
+<div class="user-container">
+    <h2>Welcome, {{ user.id }}</h2>
+    <h2>Welcome, {{ user.name }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone Number:</strong> {{ user.phoneNumber }}</p>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+  
+    <div class="address-form">
+      <div class="form-group">
+        <label for="origin">Start Address:</label>
+        <input
+          type="text"
+          id="origin"
+          #origin
+          placeholder="Enter origin address"
+          class="form-control"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="destination">Destination Address:</label>
+        <input
+          type="text"
+          id="destination"
+          #destination
+          placeholder="Enter destination address"
+          class="form-control"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="vehicle">Select Vehicle Type:</label>
+        <select id="vehicle" #vehicleType class="form-control">
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="hatchback">Hatchback</option>
+          <option value="minivan">Minivan</option>
+        </select>
+      </div>
+  
+      <button (click)="onSubmit(origin, destination, vehicleType)">Submit</button>
+    </div>
+  </div>
+  

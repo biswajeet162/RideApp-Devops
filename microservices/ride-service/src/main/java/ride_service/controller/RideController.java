@@ -1,6 +1,7 @@
 package ride_service.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ride_service.model.Driver;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/rides")
+@Slf4j
 public class RideController {
 
     @Autowired
@@ -30,7 +32,9 @@ public class RideController {
     // Get available drivers for the ride
     @GetMapping("/available-drivers")
     public List<Driver> getAvailableDrivers(@RequestParam String pickupLocation) {
-        return rideService.getAvailableDrivers(pickupLocation);
+        List<Driver> availableDrivers = rideService.getAvailableDrivers(pickupLocation);
+        log.info("availableDrivers  {}", availableDrivers);
+        return availableDrivers;
     }
 
     // Notify driver about the ride

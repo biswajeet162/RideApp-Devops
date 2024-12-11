@@ -1,0 +1,70 @@
+.drivers {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f7f7f7;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .driver-list {
+    margin-bottom: 20px;
+  }
+  
+  .driver-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vehicle-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .vehicle-info h3 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .time, .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4CAF50;
+  }
+  
+  .driver-radio {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .book-btn-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .book-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .book-btn:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,28 @@
+<div class="drivers">
+    <div class="container">
+      <h1>Select a Vehicle</h1>
+      
+  
+      <!-- Iterating through the driver list -->
+      <div class="driver-list" *ngFor="let vehicle of availableDriverResponse?.drivers">
+        <!-- Vehicle Type Section -->
+        <div class="driver-item">
+          <div class="vehicle-info">
+            <h3>{{ vehicle?.vehicleType}} | ({{ vehicle?.drivers?.length}})</h3> 
+            <span class="time">5 min</span>
+            <span class="price">50/-</span>
+            <label class="driver-radio">
+              <input type="radio" name="driverSelection" (click)="selectDriver(vehicle)" />
+              
+            </label>
+          </div>
+          </div>  
+      </div>
+  
+      <!-- Submit Button to trigger selection -->
+      <div class="book-btn-container">
+        <button class="book-btn" (click)="bookSelectedDriver()">Book Now</button>
+      </div>
+    </div>
+  </div>
+  

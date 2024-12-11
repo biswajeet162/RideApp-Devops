@@ -1,0 +1,11 @@
+<div class="user-container">
+    <h2>Welcome, {{ driver.id }}</h2>
+    <h2>Welcome, {{ driver.name }}</h2>
+    <p><strong>Email:</strong> {{ driver.email }}</p>
+    <p><strong>Phone Number:</strong> {{ driver.phoneNumber }}</p>
+    <p><strong>Role:</strong> {{ driver.role }}</p>
+  
+    <app-driver-dashboard [driver]="driver"></app-driver-dashboard>
+
+</div>
+  

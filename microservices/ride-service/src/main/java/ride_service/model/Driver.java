@@ -13,9 +13,9 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+    private String userId;
 
     private String vehicleType;
     private String status; // AVAILABLE, ON_RIDE, UNAVAILABLE

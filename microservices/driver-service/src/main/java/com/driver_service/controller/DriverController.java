@@ -3,8 +3,13 @@ package com.driver_service.controller;
 import com.driver_service.exceptions.UserAlreadyExist;
 import com.driver_service.model.Driver;
 import com.driver_service.model.DriverDTO;
+import com.driver_service.model.RideRequest;
 import com.driver_service.model.User;
+import com.driver_service.model.availableDriversDTO.AvailableDriverResponseDTO;
 import com.driver_service.service.DriverService;
+import com.driver_service.service.DriversNearUserService;
+import com.driver_service.service.MapService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +18,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/drivers")
+@Slf4j
 public class DriverController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private DriversNearUserService driversNearUserService;
+
+    @Autowired
+    private MapService mapService;
 
 
     // Existing onboarding driver endpoint
@@ -25,6 +37,20 @@ public class DriverController {
         Driver savedDriver = driverService.onboardDriver(registeredDriverUser);
         DriverDTO driverDTO = new DriverDTO(savedDriver.getId(), savedDriver.getUser().getId(), savedDriver.getUser().getName(), savedDriver.getUser().getEmail(),savedDriver.getUser().getPhoneNumber(), savedDriver.getVehicleType(), savedDriver.getStatus(), savedDriver.getLocation(), savedDriver.getRating());
         return driverDTO;
+    }
+
+    // Get available drivers for the ride
+    @PostMapping(value = "/nearby-available-drivers", produces = "application/json")
+    public ResponseEntity<AvailableDriverResponseDTO> getAvailableDriversNearToYou(@RequestBody RideRequest rideRequest) {
+        try {
+            String userLocationFromMap = mapService.getRandomLocationFromSrcDest(rideRequest.getPickupLocation());
+            AvailableDriverResponseDTO availableDriversNearUser = driversNearUserService.getAvailableDriversNearUser(rideRequest, userLocationFromMap);
+            log.info("availableDrivers: {}", availableDriversNearUser);
+            return ResponseEntity.ok(availableDriversNearUser);
+        } catch (Exception e) {
+            log.info("availableDrivers error: {}", e);
+        }
+        return null;
     }
 
     // Existing update driver location endpoint
